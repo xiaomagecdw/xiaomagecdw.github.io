@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head tag -->
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Title -->
+  
+  <title>ReviewBoard环境搭建 - Hexo</title>
+
+  <!--Favicon-->
+  <link rel="icon" href="favicon/favicon.ico">
+
+  <!--Description-->
+  
+      <meta name="description" content="RevewBoard安装过程、注意事项">
+  
+
+  <!--Author-->
+  
+      <meta name="author" content="John Doe">
+  
+
+  <!-- Pure CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Open+Sans:300,800" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+
+  <body>
+  	<div class="container-fluid navbar-container m-sm-5">
+      <!-- Header -->
+      <nav class="navbar navbar-toggleable-sm navbar-light px-1 py-3 my-3 mb-sm-5">
+  <a class="navbar-brand ml-2" href="/">Hexo</a>
+  <button class="navbar-toggler navbar-toggler-right py-2" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse text-center" id="navbarCollapse">
+    <ul class="navbar-nav ml-auto my-auto">
+      
+    </ul>
+    <hr class="hidden-md-up" />
+  </div>
+</nav>
+
+
+  		<div class="row">
+  			<div class="col-12 mb-4">
+  <img class="img-fluid project-img" src="/images/unsplash.jpg" alt="ReviewBoard环境搭建">
+</div>
+<div class="col-lg-4 col-12 pt-3 px-4 pr-lg-5">
+  <h1>ReviewBoard环境搭建</h1>
+</div>
+<div class="col-lg-8 col-12 pt-lg-3 mb-4 pl-lg-5 px-lg-0 px-4 portfolio-content">
+  <h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><h2 id="ReviewBoard基于Python语言，需要做一些准备工作"><a href="#ReviewBoard基于Python语言，需要做一些准备工作" class="headerlink" title="ReviewBoard基于Python语言，需要做一些准备工作"></a>ReviewBoard基于Python语言，需要做一些准备工作</h2><ul>
+<li>安装Python 2.7及以上</li>
+<li>安装MySQL 5.6及以上数据库（还支持PostgreSQL）</li>
+<li>安装Apache HTTP 服务器和mod_wsgi模块</li>
+</ul>
+<h2 id="安装Python2-7"><a href="#安装Python2-7" class="headerlink" title="安装Python2.7"></a>安装Python2.7</h2><p>Centos系统对Python有一些依赖，系统位置带Python安装，Centos 7的python版本2.7.5，对于ReviewBoard，无需更新python版本，可以查看版本确定</p>
+<ul>
+<li>Python –version</li>
+</ul>
+<h2 id="安装MySQL"><a href="#安装MySQL" class="headerlink" title="安装MySQL"></a>安装MySQL</h2><ul>
+<li>yum install wget        //确保wget包已安装</li>
+<li>wget <a href="https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm" target="_blank" rel="noopener">https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm</a></li>
+<li>//添加MySQL Yum 仓库，使用 wget 命令下载MySQL的RPM包</li>
+<li>rpm -Uvh mysql57-community-release-el7-11.noarch.rpm</li>
+<li>//安装RPM包</li>
+<li>yum install mysql-community-server</li>
+<li>//使用 yum 安装 mysql-community-server</li>
+<li>service mysqld start</li>
+<li>//启动MySQL服务</li>
+<li>//查看超级用户的密码</li>
+<li>sudo grep ‘temporary password’ /var/log/mysqld.log </li>
+<li>//登录mysql </li>
+<li>mysql -uroot -p </li>
+<li>//修改密码 </li>
+<li>ALTER USER ‘root’@’localhost’ IDENTIFIED BY ‘P@ssw0rd123’; </li>
+<li>//默认mysql的root用户不支持远程访问，开启访问权限</li>
+<li>use mysql </li>
+<li>update user set host=’%’ where user=’root’;</li>
+<li>flush privileges; </li>
+<li>//创建数据库reviewboar </li>
+<li>CREATE DATABASE <code>reviewboard</code> CHARACTER SET ‘utf8’; </li>
+<li>//新增用户reviewboard并授予reviewboard数据库全部权限</li>
+<li>grant all privileges on reviewboard.* to reviewboard@’%’ identified by “reviewboard”; </li>
+<li>//永久开启3306端口 </li>
+<li>firewall-cmd –add-port=3306/tcp –zone=public</li>
+<li>修改 /etc/my.cnf文件，添加character-set-server=utf8</li>
+<li>service mysqld restart</li>
+</ul>
+<h2 id="安装Apache-Web服务器"><a href="#安装Apache-Web服务器" class="headerlink" title="安装Apache Web服务器"></a>安装Apache Web服务器</h2><ul>
+<li>yum install httpd</li>
+<li>//使用yum 安装httpd</li>
+<li>systemctl enable httpd.service</li>
+<li>//添加httpd为系统服务</li>
+<li>yum install mod_wsgi</li>
+<li>//安装Apache HTTP服务器的mod_wsgi 拓展模块（支持使用了Python WSGI标准的Python应用）</li>
+<li>service httpd start</li>
+<li>//启动httpd服务</li>
+</ul>
+<h2 id="安装ReviewBoard"><a href="#安装ReviewBoard" class="headerlink" title="安装ReviewBoard"></a>安装ReviewBoard</h2><ul>
+<li>添加EPEL安装包数据源</li>
+<li>yum install epel-release</li>
+<li>安装memcached，为ReviewBoard提供缓存服务</li>
+<li>yum install memcached</li>
+<li>安装 ReviewBoard</li>
+<li>yum install ReviewBoard</li>
+<li>yum install cvs git-core subversion python-svn python-subvertpy</li>
+</ul>
+<h2 id="创建ReviewBoard站点"><a href="#创建ReviewBoard站点" class="headerlink" title="创建ReviewBoard站点"></a>创建ReviewBoard站点</h2><ul>
+<li><p>使用rb-site 添加新站点</p>
+</li>
+<li><p>rb-site install /var/www/reviews</p>
+</li>
+</ul>
+<h2 id="根据对话提示配置站点"><a href="#根据对话提示配置站点" class="headerlink" title="根据对话提示配置站点"></a>根据对话提示配置站点</h2><ul>
+<li><p>Domain Name: 192.168.22.89（本机ip作为web站点） </p>
+</li>
+<li><p>Root Path [/]: / </p>
+</li>
+<li><p>Database Type: mysql </p>
+</li>
+<li><p>Database Name [reviewboard]: reviewboard </p>
+</li>
+<li><p>Database Server [localhost]: 127.0.0.1 </p>
+</li>
+<li><p>Database Username: reviewboard</p>
+</li>
+<li><p>Database Password: reviewboard</p>
+</li>
+<li><p>Memcache Server [localhost:11211]: localhost:11211 </p>
+</li>
+<li><p>Username [admin]: admin </p>
+</li>
+<li><p>Password: admin （需要记住） </p>
+</li>
+<li><p>E-Mail Address: <a href="mailto:example@example.com" target="_blank" rel="noopener">example@example.com</a> </p>
+</li>
+<li><p>Company/Organization Name (optional): yss</p>
+</li>
+</ul>
+<ul>
+<li>apache-wsgi.conf作为Apache服务器的启动配置文件</li>
+<li>cp /var/www/reviews/conf/apache-wsgi.conf /etc/httpd/conf.d/</li>
+<li>更改 /var/www/reviews 文件夹的拥有者（ReviewBoard需要拥有文件夹的读写权限）</li>
+</ul>
+<ul>
+<li><p>chown -R apache:apache /var/www/reviews/</p>
+</li>
+<li><p>setsebool -P httpd_can_sendmail 1</p>
+</li>
+<li><p>setsebool -P httpd_can_network_connect 1</p>
+</li>
+<li><p>setsebool -P httpd_can_network_memcache 1</p>
+</li>
+<li><p>setsebool -P httpd_can_network_connect_db 1</p>
+</li>
+<li><p>setsebool -P httpd_unified 1</p>
+</li>
+<li><p>setsebool -P httpd_can_connect_ldap 1</p>
+</li>
+</ul>
+<h2 id="重启httpd服务"><a href="#重启httpd服务" class="headerlink" title="重启httpd服务"></a>重启httpd服务</h2><ul>
+<li>service memcached start</li>
+<li>service httpd restart</li>
+<li>firewall-cmd –add-port=80/tcp –zone=public</li>
+<li>登录地址：localhost:80(apache-wsgi.conf配置文件中默认端口是：80)</li>
+<li>访问localhost报蓝色错误</li>
+</ul>
+<ul>
+<li><p>pip install –upgrade pip                        </p>
+</li>
+<li><p>pip install –upgrade setuptools</p>
+</li>
+</ul>
+<h2 id="编辑reviewboard-svn-hooks-conf-ini文件"><a href="#编辑reviewboard-svn-hooks-conf-ini文件" class="headerlink" title="编辑reviewboard-svn-hooks/conf.ini文件"></a>编辑reviewboard-svn-hooks/conf.ini文件</h2><ul>
+<li><p># cd /etc/reviewboard-svn-hooks/</p>
+</li>
+<li><p># ls</p>
+</li>
+<li><p>conf.ini  rb-svn-hooks-used-rid.db</p>
+</li>
+<li><p># ll</p>
+</li>
+<li><p>-rwxrwxrwx. 1 root    root   200 6月  24 18:48 conf.ini</p>
+</li>
+<li><p>-rw-r–r–. 1 svnroot svn  12288 6月  24 20:55 rb-svn-hooks-used-rid.db</p>
+</li>
+<li><p># vi conf.ini</p>
+</li>
+</ul>
+<h2 id="conf-ini文件内容"><a href="#conf-ini文件内容" class="headerlink" title="conf.ini文件内容"></a>conf.ini文件内容</h2><p>[common]</p>
+<p>debug=0</p>
+<p>[reviewboard]</p>
+<p>url=<a href="http://192.168.99.237/" target="_blank" rel="noopener">http://192.168.99.237/</a></p>
+<p>username=admin</p>
+<p>password=123456</p>
+<p>[rule]</p>
+<p>min_ship_it_count=2</p>
+<p>min_expert_ship_it_count=2</p>
+<p>experts=chuliang,caiyanan</p>
+<p>review_path=</p>
+<p>ignore_path=</p>
+<h2 id="编辑SVN项目中的pre-commit文件"><a href="#编辑SVN项目中的pre-commit文件" class="headerlink" title="编辑SVN项目中的pre-commit文件"></a>编辑SVN项目中的pre-commit文件</h2><ul>
+<li># cd csvn/data/repositories/project/hooks/</li>
+<li># ll</li>
+<li>总用量 48</li>
+<li>-rwxr-xr-x. 1 svnroot svn 2062 7月  30 2018 post-commit.tmpl</li>
+<li>-rwxr-xr-x. 1 svnroot svn 1638 7月  30 2018 post-lock.tmpl</li>
+<li>-rwxr-xr-x. 1 svnroot svn 2289 7月  30 2018 post-revprop-change.tmpl</li>
+<li>-rwxr-xr-x. 1 svnroot svn 1567 7月  30 2018 post-unlock.tmpl</li>
+<li>-rwxrwxrwx. 1 svnroot svn  993 6月  24 20:52 pre-commit</li>
+<li>-rwxr-xr-x. 1 svnroot svn 3447 4月  18 21:12 pre-commit.tmpl</li>
+<li>-rwxr-xr-x. 1 svnroot svn 3447 7月  30 2018 pre-commit.tmpl.bak</li>
+<li>-rwxr-xr-x. 1 svnroot svn 2455 7月  30 2018 pre-lock.tmpl</li>
+<li>-rwxr-xr-x. 1 svnroot svn 2786 7月  30 2018 pre-revprop-change.tmpl</li>
+<li>-rwxr-xr-x. 1 svnroot svn 2143 7月  30 2018 pre-unlock.tmpl</li>
+<li>-rwxr-xr-x. 1 svnroot svn 3163 7月  30 2018 start-commit.tmpl</li>
+<li>drwxr-xr-x. 2 svnroot svn 4096 7月  31 2018 svntool</li>
+<li># vi pre-commit</li>
+</ul>
+<h2 id="pre-commit文件内容"><a href="#pre-commit文件内容" class="headerlink" title="pre-commit文件内容"></a>pre-commit文件内容</h2><p>#!/bin/sh</p>
+<p>REPOS=”$1”</p>
+<p>TXN=”$2”</p>
+<p>SVNLOOK=/opt/csvn/bin/svnlook #根据自己的具体情况,指定svnlook命令的具体的路径</p>
+<p>LOGMSG=<code>$SVNLOOK log -t &quot;$TXN&quot; &quot;$REPOS&quot; | grep &quot;[a-zA-Z0-9]&quot; | wc -c</code></p>
+<p>#检测提交信息的长度,如果长度小于10个字符就报错</p>
+<p>if [ “$LOGMSG” -lt 8 ];</p>
+<p>then</p>
+<p>​    echo “Log message can’t be empty! you must input more than 8 chars as comment!.” 1&gt;&amp;2</p>
+<p>​    exit 1</p>
+<p>fi</p>
+<p>strict_review $REPOS $TXN</p>
+<p>exit $?</p>
+<p>报错：</p>
+<p>​    Sending        G:/自动化发布研究/自动发布预研/LearnJava/com/cdw/Demo.java</p>
+<p>​    Transmitting file data …</p>
+<p>​    A repository hook failed</p>
+<p>svn: Commit failed (details follow):</p>
+<p>svn: Commit blocked by pre-commit hook (exit code 1) with output:</p>
+<p>(13, ‘Permission denied’)</p>
+<p>Traceback (most recent call last):</p>
+<p>  File “/usr/lib/python2.6/site-packages/reviewboard_svn_hooks-0.2.1_r20-py2.6.egg/reviewboardsvnhooks/strict_review.py”, line 197, in main</p>
+<p>​    _main()</p>
+<p>  File “/usr/lib/python2.6/site-packages/reviewboard_svn_hooks-0.2.1_r20-py2.6.egg/reviewboardsvnhooks/strict_review.py”, line 192, in _main</p>
+<p>​    check_rb(repos, txn)</p>
+<p>  File “/usr/lib/python2.6/site-packages/reviewboard_svn_hooks-0.2.1_r20-py2.6.egg/reviewboardsvnhooks/strict_review.py”, line 156, in check_rb</p>
+<p>​    add_to_rid_db(rid)</p>
+<p>  File “/usr/lib/python2.6/site-packages/reviewboard_svn_hooks-0.2.1_r20-py2.6.egg/reviewboardsvnhooks/strict_review.py”, line 127, in add_to_rid_db</p>
+<p>​    ‘rb-svn-hooks-used-rid.db’))</p>
+<p>  File “/usr/lib64/python2.6/shelve.py”, line 239, in open</p>
+<p>​    return DbfilenameShelf(filename, flag, protocol, writeback)</p>
+<p>  File “/usr/lib64/python2.6/shelve.py”, line 223, in <strong>init</strong></p>
+<p>​    Shelf.<strong>init</strong>(self, anydbm.open(filename, flag), protocol, writeback)</p>
+<p>  File “/usr/lib64/python2.6/anydbm.py”, line 83, in open</p>
+<p>​    return mod.open(file, flag, mode)</p>
+<p>  File “/usr/lib64/python2.6/dbhash.py”, line 19, in open</p>
+<p>​    return bsddb.hashopen(file, flag, mode)</p>
+<p>  File “/usr/lib64/python2.6/bsddb/<strong>init</strong>.py”, line 361, in hashopen</p>
+<p>​    d.open(file, db.DB_HASH, flags, mode)</p>
+<p>DBAccessError: (13, ‘Permission denied’)</p>
+<p>解决办法：</p>
+<p>把/etc/reviewboard-svn-hooks/目录下的文件授权 777</p>
+
+</div>
+
+
+      </div>
+      
+  	</div>
+
+    <!-- After footer scripts -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+  </body>
+</html>

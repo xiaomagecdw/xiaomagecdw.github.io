@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head tag -->
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Title -->
+  
+  <title>Linux操作命令 - Hexo</title>
+
+  <!--Favicon-->
+  <link rel="icon" href="favicon/favicon.ico">
+
+  <!--Description-->
+  
+      <meta name="description" content="linux平时常用的操作命令">
+  
+
+  <!--Author-->
+  
+      <meta name="author" content="John Doe">
+  
+
+  <!-- Pure CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text|Open+Sans:300,800" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Analytics -->
+  
+
+</head>
+
+
+  <body>
+  	<div class="container-fluid navbar-container m-sm-5">
+      <!-- Header -->
+      <nav class="navbar navbar-toggleable-sm navbar-light px-1 py-3 my-3 mb-sm-5">
+  <a class="navbar-brand ml-2" href="/">Hexo</a>
+  <button class="navbar-toggler navbar-toggler-right py-2" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse text-center" id="navbarCollapse">
+    <ul class="navbar-nav ml-auto my-auto">
+      
+    </ul>
+    <hr class="hidden-md-up" />
+  </div>
+</nav>
+
+
+  		<div class="row">
+  			<div class="col-12 mb-4">
+  <img class="img-fluid project-img" src="/images/unsplash.jpg" alt="Linux操作命令">
+</div>
+<div class="col-lg-4 col-12 pt-3 px-4 pr-lg-5">
+  <h1>Linux操作命令</h1>
+</div>
+<div class="col-lg-8 col-12 pt-lg-3 mb-4 pl-lg-5 px-lg-0 px-4 portfolio-content">
+  <p>#CentOS6.8</p>
+<p>​    1.开放端口命令： /sbin/iptables -I INPUT -p tcp –dport 8080 -j ACCEPT</p>
+<p>​    2.保存：/etc/rc.d/init.d/iptables save</p>
+<p>​    3.重启服务：/etc/init.d/iptables restart</p>
+<p>​    4.查看端口是否开放：/sbin/iptables -L -n</p>
+<p>​    5.停止防火墙：service iptables stop</p>
+<p>#CentOS7</p>
+<p>​    1、查看防火墙状态/开启/关闭：systemctl status/start/stop firewalld</p>
+<p>​    2、防火墙自动开启/关闭：systemctl enable/disable firewalld</p>
+<p>​    3、开启端口：firewalld–cmd –query-port=80/tcp –zone=public</p>
+<p>​    4、查看已开启的端口：firewall-cmd –zone=public –list-port</p>
+<p>#Linux：</p>
+<p>​    查询CPU：cat /proc/cpuinfo</p>
+<p>​    查询操作系统版本：cat /etc/issue或者lsb_release -a</p>
+<p>​    查询内核：uname -r或者uname -a 、cat /etc/issue</p>
+<p>​    查询内存总量：grep MemTotal /proc/meminfo（单位KB）</p>
+<p>​    查询JDK版本：java -version</p>
+<p>​    查询系统型号：dmidecode |grep “Product Name”</p>
+<p>#AIX：</p>
+<p>​    查询逻辑CPU个数：pmcycles -m</p>
+<p>​    查询单个CPU信息：lsattr -E -l proc0</p>
+<p>​    查询系统型号、类型、序列号、内存：prtconf</p>
+<p>​    查询内核：bootinfo -K</p>
+<p>​    服务器查看内存：svmon -G 查看服务器内存大小</p>
+<p>#压缩</p>
+<p>​    tar –cvf jpg.tar *.jpg //将目录里所有jpg文件打包成tar.jpg</p>
+<p>​    tar –czf jpg.tar.gz *.jpg   //将目录里所有jpg文件打包成jpg.tar后，并且将其用gzip压缩，生成一个gzip压缩过的包，命名为jpg.tar.gz</p>
+<p>​    tar –cjf jpg.tar.bz2 *.jpg //将目录里所有jpg文件打包成jpg.tar后，并且将其用bzip2压缩，生成一个bzip2压缩过的包，命名为jpg.tar.bz2</p>
+<p>​    tar –cZf jpg.tar.Z *.jpg   //将目录里所有jpg文件打包成jpg.tar后，并且将其用compress压缩，生成一个umcompress压缩过的包，命名为jpg.tar.Z</p>
+<p>​    rar a jpg.rar *.jpg //rar格式的压缩，需要先下载rar for Linux</p>
+<p>​    zip jpg.zip *.jpg //zip格式的压缩，需要先下载zip for linux</p>
+<p>#解压</p>
+<p>​    tar –xvf file.tar //解压 tar包</p>
+<p>​    tar -xzvf file.tar.gz //解压tar.gz</p>
+<p>​    tar -xjvf file.tar.bz2   //解压 tar.bz2</p>
+<p>​    tar –xZvf file.tar.Z   //解压tar.Z</p>
+<p>​    unrar e file.rar //解压rar</p>
+<p>​    unzip file.zip //解压zip</p>
+<p>#总结</p>
+<p>​    1、*.tar 用 tar –xvf 解压</p>
+<p>​    2、*.gz 用 gzip -d或者gunzip 解压</p>
+<p>​    3、<em>.tar.gz和</em>.tgz 用 tar –xzf 解压</p>
+<p>​    4、*.bz2 用 bzip2 -d或者用bunzip2 解压</p>
+<p>​    5、*.tar.bz2用tar –xjf 解压</p>
+<p>​    6、*.Z 用 uncompress 解压</p>
+<p>​    7、*.tar.Z 用tar –xZf 解压</p>
+<p>​    8、*.rar 用 unrar e解压</p>
+<p>​    9、*.zip 用 unzip 解压</p>
+<p>#top线程文件分析</p>
+<p>​    ps -mp pid -o THREAD,tid,time</p>
+<p>​    printf “%x\n” tid</p>
+<p>​    jstack pid |grep tid -A 30</p>
+<p>#FullGC监控</p>
+<p>​    Jstat  -gcutil 线程号 1000（一秒一次）</p>
+<p>​    保存进程内存文件到dump中</p>
+<p>​    Jmap -dump:format=b,file=dumpFileName pid</p>
+<p>​    强制生成</p>
+<p>​    Jmap -F -dump:format=b,file=dumpFileName pid</p>
+<p>​    抓取线程文件</p>
+<p>​    jstack 进程号 &gt;&gt; javacore.txt  抓取线程</p>
+<p>#VisualVM远程监控命令</p>
+<p>​    需配置文件jstatd.all.policy</p>
+<p>​    Grant codebase “file:${jaba.home}/../lib/tools.jar” { prtmission java.security.Allpermission;};</p>
+<p>​    Jstatd -p 端口号 -j-djava.security.policy=jstatd.all.policy.policy</p>
+<p>​    ./jstatd -J-Djava.security.policy=jstatd.all.policy -J-Djava.rmi.server.hostname=10.35.68.249 -p 1099</p>
+<p>​    ./jstatd -J-Djava.security.policy=jstatd.all.policy -J-Djava.rmi.server.hostname=10.35.68.43 -p 1099</p>
+
+</div>
+
+
+      </div>
+      
+  	</div>
+
+    <!-- After footer scripts -->
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+  </body>
+</html>
