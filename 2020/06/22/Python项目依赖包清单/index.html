@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="xiaomagecdw">
+
+
+
+
+
+<title>Python项目依赖包清单生成 | Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">小马哥cdw博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">列表</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">小马哥cdw博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">列表</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Python项目依赖包清单生成</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">xiaomagecdw</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 22, 2020&nbsp;&nbsp;18:33:41</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Python/">Python</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="第一步：下载pipreqs工具包-pip-install-pipreqs"><a href="#第一步：下载pipreqs工具包-pip-install-pipreqs" class="headerlink" title="第一步：下载pipreqs工具包(pip install pipreqs)"></a>第一步：下载pipreqs工具包(pip install pipreqs)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">###</span></span><br><span class="line">Microsoft Windows [版本 <span class="number">6.1</span><span class="number">.7601</span>]</span><br><span class="line"></span><br><span class="line">版权所有 (c) <span class="number">2009</span> Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">C:\Users\yss--chen&gt;pip install pipreqs</span><br><span class="line">Collecting pipreqs</span><br><span class="line">  Using cached https://files.pythonhosted.org/packages/<span class="number">9</span>b/<span class="number">83</span>/b1560948400a07ec094a15c2f64587b70e1a5ab5f7b375ba902fcab5b6c3/pipreqs<span class="number">-0.4</span><span class="number">.10</span>-py2.py3-none-any.whl</span><br><span class="line">Collecting docopt (<span class="keyword">from</span> pipreqs)</span><br><span class="line">  Using cached https://files.pythonhosted.org/packages/a2/<span class="number">55</span>/<span class="number">8</span>f8cab2afd404cf578136ef2cc5dfb50baa1761b68c9da1fb1e4eed343c9/docopt<span class="number">-0.6</span><span class="number">.2</span>.tar.gz</span><br><span class="line">Collecting yarg (<span class="keyword">from</span> pipreqs)</span><br><span class="line">  Using cached https://files.pythonhosted.org/packages/<span class="number">8</span>b/<span class="number">90</span>/<span class="number">89</span>a2ff242ccab6a24fbab18dbbabc67c51a6f0ed01f9a0f41689dc177419/yarg<span class="number">-0.1</span><span class="number">.9</span>-py2.py3-none-any.whl</span><br><span class="line">Requirement already satisfied: requests in d:\softwareinstall\python36\lib\site-packages (from yarg-&gt;pipreqs) (2.21.0)</span><br><span class="line">Requirement already satisfied: certifi&gt;=2017.4.17 in d:\softwareinstall\python36\lib\site-packages (from requests-&gt;yarg-&gt;pipreqs) (2018.11.29)</span><br><span class="line">Requirement already satisfied: idna&lt;2.9,&gt;=2.5 in d:\softwareinstall\python36\lib\site-packages (from requests-&gt;yarg-&gt;pipreqs) (2.8)</span><br><span class="line">Requirement already satisfied: chardet&lt;3.1.0,&gt;=3.0.2 in d:\softwareinstall\python36\lib\site-packages (from requests-&gt;yarg-&gt;pipreqs) (3.0.4)</span><br><span class="line">Requirement already satisfied: urllib3&lt;1.25,&gt;=1.21.1 in d:\softwareinstall\python36\lib\site-packages (from requests-&gt;yarg-&gt;pipreqs) (1.24.1)</span><br><span class="line">Installing collected packages: docopt, yarg, pipreqs</span><br><span class="line">  Running setup.py install <span class="keyword">for</span> docopt ... done</span><br><span class="line">Successfully installed docopt<span class="number">-0.6</span><span class="number">.2</span> pipreqs<span class="number">-0.4</span><span class="number">.10</span> yarg<span class="number">-0.1</span><span class="number">.9</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第二步：到项目路径下，生成-txt文档，命令：pipreqs-–encoding-utf-8"><a href="#第二步：到项目路径下，生成-txt文档，命令：pipreqs-–encoding-utf-8" class="headerlink" title="第二步：到项目路径下，生成.txt文档，命令：pipreqs ./ –encoding=utf-8"></a>第二步：到项目路径下，生成.txt文档，命令：pipreqs ./ –encoding=utf-8</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### </span></span><br><span class="line"></span><br><span class="line">H:\AutoPythonWuya&gt;pipreqs ./ --encoding=utf<span class="number">-8</span></span><br><span class="line"></span><br><span class="line">INFO: Successfully saved requirements file <span class="keyword">in</span> ./requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="第三步：查看需要的依赖包，命令：type-requirements-txt"><a href="#第三步：查看需要的依赖包，命令：type-requirements-txt" class="headerlink" title="第三步：查看需要的依赖包，命令：type requirements.txt"></a>第三步：查看需要的依赖包，命令：type requirements.txt</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">H:\AutoPythonWuya&gt;type requirements.txt</span><br><span class="line">xlrd==<span class="number">1.2</span><span class="number">.0</span></span><br><span class="line">ddt==<span class="number">1.4</span><span class="number">.1</span></span><br><span class="line">selenium==<span class="number">3.141</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第四步：下载依赖包方法，命令：pip-install-r-requirements-txt"><a href="#第四步：下载依赖包方法，命令：pip-install-r-requirements-txt" class="headerlink" title="第四步：下载依赖包方法，命令：pip install -r requirements.txt"></a>第四步：下载依赖包方法，命令：pip install -r requirements.txt</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">H:\AutoPythonWuya&gt;pip install -r requirements.txt</span><br><span class="line">Requirement already satisfied: xlrd==<span class="number">1.2</span><span class="number">.0</span> <span class="keyword">in</span> d:\softwareinstall\python36\lib\site-packages (<span class="keyword">from</span> -r requirements.txt (line <span class="number">1</span>)) (<span class="number">1.2</span><span class="number">.0</span>)</span><br><span class="line">Collecting ddt==<span class="number">1.4</span><span class="number">.1</span> (<span class="keyword">from</span> -r requirements.txt (line <span class="number">2</span>))</span><br><span class="line">  Using cached https://files.pythonhosted.org/packages/<span class="number">31</span>/<span class="number">3</span>b/a38bb1606c0b912cd53976369ac10334f6b5e96fa260eebc46fabe6a43bf/ddt<span class="number">-1.4</span><span class="number">.1</span>-py2.py3-none-any.whl</span><br><span class="line">Collecting selenium==<span class="number">3.141</span><span class="number">.0</span> (<span class="keyword">from</span> -r requirements.txt (line <span class="number">3</span>))</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/<span class="number">80</span>/d6/<span class="number">4294</span>f0b4bce4de0abf13e17190289f9d0613b0a44e5dd6a7f5ca98459853/selenium<span class="number">-3.141</span><span class="number">.0</span>-py2.py3-none-any.whl (<span class="number">904</span>kB)</span><br><span class="line">    <span class="number">100</span>% |████████████████████████████████| <span class="number">911</span>kB <span class="number">11</span>kB/s</span><br><span class="line">Requirement already satisfied: urllib3 in d:\softwareinstall\python36\lib\site-packages (from selenium==3.141.0-&gt;-r requirements.txt (line 3)) (1.24.1)</span><br><span class="line">Installing collected packages: ddt, selenium</span><br><span class="line">Successfully installed ddt<span class="number">-1.4</span><span class="number">.1</span> selenium<span class="number">-3.141</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="附带：pipreqs详解"><a href="#附带：pipreqs详解" class="headerlink" title="附带：pipreqs详解"></a>附带：pipreqs详解</h3><p>​                github地址：<a href="https://github.com/bndr/pipreqs" target="_blank" rel="noopener">https://github.com/bndr/pipreqs</a></p>
+<h6 id="用法："><a href="#用法：" class="headerlink" title="用法："></a>用法：</h6><p>​        pipreqs [选项] &lt;路径&gt;</p>
+<h6 id="选项："><a href="#选项：" class="headerlink" title="选项："></a>选项：</h6><p>​        use-local仅使用本地软件包信息，而不是查询PyPI<br>​        pypi-server 使用自定义PyPi服务器<br>​        proxy 使用代理，参数将传递到请求库。您也可以只设置终端中的environment参数：<br>​        $ export HTTP_PROXY =“ <a href="http://10.10.1.10:3128”">http://10.10.1.10:3128”</a><br>​        $ export HTTPS_PROXY =“ <a href="https://10.10.1.10:1080”">https://10.10.1.10:1080”</a><br>​        debug打印调试信息<br>​        ignore &lt;目录&gt; …忽略多余的目录<br>​        encoding 使用encoding参数打开文件<br>​        savepath &lt;文件&gt;将需求列表保存在给定文件中<br>​        print在标准输出中输出需求列表<br>​        force覆盖现有的requirements.txt<br>​        clean &lt;文件&gt;通过删除项目中未导入的模块来清理requirements.txt。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>xiaomagecdw</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2020/06/22/Python%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E5%8C%85%E6%B8%85%E5%8D%95/">http://yoursite.com/2020/06/22/Python%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E5%8C%85%E6%B8%85%E5%8D%95/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Python%E9%A1%B9%E7%9B%AE/"># Python项目</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2019/11/01/ReviewBoard%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">ReviewBoard环境搭建</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© xiaomagecdw | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
