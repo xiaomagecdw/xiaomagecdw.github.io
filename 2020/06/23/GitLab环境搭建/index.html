@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="xiaomagecdw">
+
+
+
+
+
+<title>GitLab环境搭建 | Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">小马哥cdw博客</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">列表</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">小马哥cdw博客</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">列表</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">标签</a>
+                
+                    <a class="menu-item" href="/about">关于</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">GitLab环境搭建</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">xiaomagecdw</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 23, 2020&nbsp;&nbsp;15:11:45</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/GitLab/">GitLab</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p><strong>GitLab环境搭建</strong></p>
+<h3 id="一、部署前安装必要的依赖包-注：该环境系统CentOS-7以上"><a href="#一、部署前安装必要的依赖包-注：该环境系统CentOS-7以上" class="headerlink" title="一、部署前安装必要的依赖包(注：该环境系统CentOS 7以上)"></a>一、部署前安装必要的依赖包(注：该环境系统CentOS 7以上)</h3><p>在CentOS系统上安装所需要的依赖：ssh、防火墙、postfix(用于邮件通知)、wget，已下这些命令会打开系统防火墙中的HTTP和SSH端口访问。</p>
+<p>1、安装ssh    </p>
+<p>命令：[root@localhost ~]# yum install -y curl policycoreutils-python openssh-server</p>
+<p><img src="H:%5Cblog%5Csource_posts%5CGitLab%E7%8E%AF%E5%A2%83%E5%9B%BE%E7%89%87%5Cclipboard.png" alt="img"></p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C02817e63102840ad931a8d84eb7badee%5Cclipboard.png" alt="img"></p>
+<p>安装完成显示如图</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C98cb8474567447b4b71b35c6b6b46015%5Cclipboard.png" alt="img"></p>
+<p>2、将SSH服务设置为开机自己启动，命令：systemctl enable sshd</p>
+<p>3、启动SSH服务，命令：systemctl start sshd</p>
+<p>4、查看SSH服务状态，命令：systemctl status sshd，如图</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5Cdd8ee9eea27a44da8a1611ce88a5eb11%5Cclipboard.png" alt="img"></p>
+<p>5、防火墙安装，命令：yum install firewalld systemd -y，若出现“完毕！”字符，表示安装成功，否则失败。</p>
+<p>6、防火墙设置开机自启动或关闭，命令：systemctl enable/disable firewalld</p>
+<p>7、防火墙服务开启/停止/状态，命令：systemctl start/stop/status firewalld</p>
+<p>8、防火墙增加某个端口，命令：firewall-cmd –add-port=80/tcp –zone=public</p>
+<p>9、防火墙关闭某个端口，命令：firewall-cmd –remove-port=80/tcp –zone=public –permanent(表示永久生效)</p>
+<p>​       10、防火墙查看某个端口是否开启，命令：firewall-cmd –query-port=80/tcp –zone=public –permanent</p>
+<p>11、防火墙查看已开启端口，命令：firewall-cmd –zone=public –list-port</p>
+<p>12、不改变状态的条件下重启防火墙，命令：firewall-cmd –reload</p>
+<p>13、状态信息将会丢失，当防火墙有问题时可以使用，如，状态信息和防火墙规则都正常却无法建立任何链接的情况等，命令：firewalld-cmd –complete-reload</p>
+<p>14、查看、打开、关闭应急模式（应急模式阻断所有网络连接，防止出现紧急状况），命令：firewalld-cmd –query-panic/–panic-on/–panic-off</p>
+<p>15、将http添加到firewalld中，命令：firewall-cmd –permanent –add-service=http</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C5bcdef87a0d948ee80e7c50d7eeb2f3e%5Cclipboard.png" alt="img"></p>
+<p>16、重启防火墙，命令：systemctl reload firewalld</p>
+<p>17、安装Postfix邮件通知，命令：yum install postfix</p>
+<p><img src="file" alt="img"></p>
+<p>18、将postfix服务设置开启自启动，命令：systemctl enable postfix</p>
+<p>19、开启/停止/状态postfix服务，命令：systemctl start/stop/status postfix</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C212176c8d2b641fd9b2a37ba5daf2b5c%5Cclipboard.png" alt="img"></p>
+<p>20、检查wget是否已安装，命令：wget -V，若显示该图，说明已安装，否则未安装</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C780f49dc7aad474c96cfcae5d63df835%5Cclipboard.png" alt="img"></p>
+<p>21、wget安装，命令：yum -y install wget</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C99ab699e746b4c6db1e0e970624f9832%5Cclipboard.png" alt="img"></p>
+<p>22、安装vim编辑器，命令：yum install vim -y</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C1d66e5a04aec4526a57ec68ec38f5da3%5Cclipboard.png" alt="img"></p>
+<h3 id="二、添加GitLab镜像文件，并进行安装"><a href="#二、添加GitLab镜像文件，并进行安装" class="headerlink" title="二、添加GitLab镜像文件，并进行安装"></a>二、添加GitLab镜像文件，并进行安装</h3><p>1、添加gitLab镜像</p>
+<p>地址：wget <a href="https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-10.5.7-ce.0.el7.x86_64.rpm" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm</a></p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C12ac487f124646608f2addac5712ff9b%5Cclipboard.png" alt="img"></p>
+<p>2、安装gitLab，命令：rpm -i gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm，安装过程中，需要等待一段时间，如出现如图，表示安装成功，否则失败</p>
+<p>警告：gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm: 头V4 RSA/SHA1 Signature, 密钥 ID f27eab47: NOKEY</p>
+<p>   gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm: 头V4 RSA/SHA1 Signature, 密钥 ID f27eab47: NOKEY</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5Ca4b719be2bba4319991822dd425a1bcc%5Cclipboard.png" alt="img"></p>
+<p>3、修改gitlab配置文件指定服务器ip和自定义端口</p>
+<p>vim /etc/gitlab/gitlab.rb</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C0471b1875bb34cb0b4cf05bf3b12985c%5Cclipboard.png" alt="img"></p>
+<p>编辑完，按Esc健，在按Shift+:，在输入wq，保存退出</p>
+<p>4、重置并启动gitlab</p>
+<p>执行：gitlab-ctl reconfigure</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C52109b7e05e344aab1f8886632141924%5Cclipboard.png" alt="img"></p>
+<p>   gitlab-ctl restart</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5Ca5e809a9076641a8bc521cddf627457c%5Cclipboard.png" alt="img"></p>
+<p>5、访问GitLab页面</p>
+<p><a href="http://ip:8082(防火墙确定开始8082端口)">http://ip:8082(防火墙确定开始8082端口)</a></p>
+<p>进入页面，第一次登陆需要修改密码，密码八个字符(root123456)</p>
+<p>6、访问页面报如图错误</p>
+<p>内存太小，虚拟机，请更改配置，物理机，没招！</p>
+<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C02a67d4524184992bdec89dee4447eb2%5Cclipboard.png" alt="img"></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>xiaomagecdw</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://yoursite.com/2020/06/23/GitLab%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">http://yoursite.com/2020/06/23/GitLab%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Do you believe in <strong>DESTINY<strong>?</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/GitLab%E5%AE%89%E8%A3%85/"># GitLab安装</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/07/02/Fiddler%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">Fiddler使用教程</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/23/Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C/">Oracle数据库操作</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© xiaomagecdw | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
