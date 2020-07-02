@@ -202,15 +202,12 @@
             <p><strong>GitLab环境搭建</strong></p>
 <h3 id="一、部署前安装必要的依赖包-注：该环境系统CentOS-7以上"><a href="#一、部署前安装必要的依赖包-注：该环境系统CentOS-7以上" class="headerlink" title="一、部署前安装必要的依赖包(注：该环境系统CentOS 7以上)"></a>一、部署前安装必要的依赖包(注：该环境系统CentOS 7以上)</h3><p>在CentOS系统上安装所需要的依赖：ssh、防火墙、postfix(用于邮件通知)、wget，已下这些命令会打开系统防火墙中的HTTP和SSH端口访问。</p>
 <p>1、安装ssh    </p>
-<p>命令：[root@localhost ~]# yum install -y curl policycoreutils-python openssh-server</p>
-<p><img src="H:%5Cblog%5Csource_posts%5CGitLab%E7%8E%AF%E5%A2%83%E5%9B%BE%E7%89%87%5Cclipboard.png" alt="img"></p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C02817e63102840ad931a8d84eb7badee%5Cclipboard.png" alt="img"></p>
-<p>安装完成显示如图</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C98cb8474567447b4b71b35c6b6b46015%5Cclipboard.png" alt="img"></p>
+<p>命令：[root@localhost ~]# yum install -y curl policycoreutils-python openssh-server<img src="/image/GitLab/yum%E5%91%BD%E4%BB%A4.png" alt="yum命令"></p>
+<p><img src="/image/GitLab/GitLab.png" alt="GitLab"></p>
+<p>安装完成显示如图<img src="/image/GitLab/%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90.png" alt="安装完成"></p>
 <p>2、将SSH服务设置为开机自己启动，命令：systemctl enable sshd</p>
 <p>3、启动SSH服务，命令：systemctl start sshd</p>
-<p>4、查看SSH服务状态，命令：systemctl status sshd，如图</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5Cdd8ee9eea27a44da8a1611ce88a5eb11%5Cclipboard.png" alt="img"></p>
+<p>4、查看SSH服务状态，命令：systemctl status sshd，如图<img src="/image/GitLab/%E6%9F%A5%E7%9C%8BSSH%E6%9C%8D%E5%8A%A1.png" alt="查看SSH服务"></p>
 <p>5、防火墙安装，命令：yum install firewalld systemd -y，若出现“完毕！”字符，表示安装成功，否则失败。</p>
 <p>6、防火墙设置开机自启动或关闭，命令：systemctl enable/disable firewalld</p>
 <p>7、防火墙服务开启/停止/状态，命令：systemctl start/stop/status firewalld</p>
@@ -221,42 +218,31 @@
 <p>12、不改变状态的条件下重启防火墙，命令：firewall-cmd –reload</p>
 <p>13、状态信息将会丢失，当防火墙有问题时可以使用，如，状态信息和防火墙规则都正常却无法建立任何链接的情况等，命令：firewalld-cmd –complete-reload</p>
 <p>14、查看、打开、关闭应急模式（应急模式阻断所有网络连接，防止出现紧急状况），命令：firewalld-cmd –query-panic/–panic-on/–panic-off</p>
-<p>15、将http添加到firewalld中，命令：firewall-cmd –permanent –add-service=http</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C5bcdef87a0d948ee80e7c50d7eeb2f3e%5Cclipboard.png" alt="img"></p>
+<p>15、将http添加到firewalld中，命令：firewall-cmd –permanent –add-service=http<img src="/image/GitLab/%E6%B7%BB%E5%8A%A0http%E6%9C%8D%E5%8A%A1.png" alt="添加http服务"></p>
 <p>16、重启防火墙，命令：systemctl reload firewalld</p>
 <p>17、安装Postfix邮件通知，命令：yum install postfix</p>
-<p><img src="file" alt="img"></p>
 <p>18、将postfix服务设置开启自启动，命令：systemctl enable postfix</p>
-<p>19、开启/停止/状态postfix服务，命令：systemctl start/stop/status postfix</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C212176c8d2b641fd9b2a37ba5daf2b5c%5Cclipboard.png" alt="img"></p>
-<p>20、检查wget是否已安装，命令：wget -V，若显示该图，说明已安装，否则未安装</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C780f49dc7aad474c96cfcae5d63df835%5Cclipboard.png" alt="img"></p>
+<p>19、开启/停止/状态postfix服务，命令：systemctl start/stop/status postfix<img src="/image/GitLab/%E6%B7%BB%E5%8A%A0posfix%E6%9C%8D%E5%8A%A1.png" alt="添加posfix服务"></p>
+<p>20、检查wget是否已安装，命令：wget -V，若显示该图，说明已安装，否则未安装<img src="/image/GitLab/wget%E5%AE%89%E8%A3%85.png" alt="wget安装"></p>
 <p>21、wget安装，命令：yum -y install wget</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C99ab699e746b4c6db1e0e970624f9832%5Cclipboard.png" alt="img"></p>
-<p>22、安装vim编辑器，命令：yum install vim -y</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C1d66e5a04aec4526a57ec68ec38f5da3%5Cclipboard.png" alt="img"></p>
+<p><img src="/image/GitLab/wgetinstall.png" alt="wgetinstall"></p>
+<p>22、安装vim编辑器，命令：yum install vim -y<img src="/image/GitLab/vim%E5%AE%89%E8%A3%85.png" alt="vim安装"></p>
 <h3 id="二、添加GitLab镜像文件，并进行安装"><a href="#二、添加GitLab镜像文件，并进行安装" class="headerlink" title="二、添加GitLab镜像文件，并进行安装"></a>二、添加GitLab镜像文件，并进行安装</h3><p>1、添加gitLab镜像</p>
-<p>地址：wget <a href="https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-10.5.7-ce.0.el7.x86_64.rpm" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm</a></p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C12ac487f124646608f2addac5712ff9b%5Cclipboard.png" alt="img"></p>
+<p>地址：wget <a href="https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-10.5.7-ce.0.el7.x86_64.rpm" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm</a> <img src="/image/GitLab/Gitlab%E9%95%9C%E5%83%8F.png" alt="Gitlab镜像"></p>
 <p>2、安装gitLab，命令：rpm -i gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm，安装过程中，需要等待一段时间，如出现如图，表示安装成功，否则失败</p>
 <p>警告：gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm: 头V4 RSA/SHA1 Signature, 密钥 ID f27eab47: NOKEY</p>
-<p>   gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm: 头V4 RSA/SHA1 Signature, 密钥 ID f27eab47: NOKEY</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5Ca4b719be2bba4319991822dd425a1bcc%5Cclipboard.png" alt="img"></p>
+<p>   gitlab-ce-10.0.0-ce.0.el7.x86_64.rpm: 头V4 RSA/SHA1 Signature, 密钥 ID f27eab47: NOKEY<img src="/image/GitLab/git%E5%AE%89%E8%A3%85.png" alt="git安装"></p>
 <p>3、修改gitlab配置文件指定服务器ip和自定义端口</p>
-<p>vim /etc/gitlab/gitlab.rb</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C0471b1875bb34cb0b4cf05bf3b12985c%5Cclipboard.png" alt="img"></p>
+<p>vim /etc/gitlab/gitlab.rb<img src="/image/GitLab/GitLab%E9%85%8D%E7%BD%AE.png" alt="GitLab配置"></p>
 <p>编辑完，按Esc健，在按Shift+:，在输入wq，保存退出</p>
 <p>4、重置并启动gitlab</p>
-<p>执行：gitlab-ctl reconfigure</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C52109b7e05e344aab1f8886632141924%5Cclipboard.png" alt="img"></p>
-<p>   gitlab-ctl restart</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5Ca5e809a9076641a8bc521cddf627457c%5Cclipboard.png" alt="img"></p>
+<p>执行：gitlab-ctl reconfigure<img src="/image/GitLab/%E7%94%9F%E6%95%88.png" alt="生效"></p>
+<p>   gitlab-ctl restart<img src="/image/GitLab/%E9%87%8D%E5%90%AF.png" alt="重启"></p>
 <p>5、访问GitLab页面</p>
 <p><a href="http://ip:8082(防火墙确定开始8082端口)">http://ip:8082(防火墙确定开始8082端口)</a></p>
 <p>进入页面，第一次登陆需要修改密码，密码八个字符(root123456)</p>
 <p>6、访问页面报如图错误</p>
-<p>内存太小，虚拟机，请更改配置，物理机，没招！</p>
-<p><img src="C:%5CUsers%5Cyss--chen%5CAppData%5CLocal%5CYNote%5Cdata%5Ccdw0614@126.com%5C02a67d4524184992bdec89dee4447eb2%5Cclipboard.png" alt="img"></p>
+<p>内存太小，虚拟机，请更改配置，物理机，没招！<img src="/image/GitLab/%E9%94%99%E8%AF%AF.png" alt="错误"></p>
 
         </div>
 
